@@ -34,3 +34,7 @@ def crawl(req: CrawlRequest):
 
     except Exception as e:
         raise HTTPException(status_code=422, detail=str(e))
+    
+@app.get("/health")
+def health():
+    return {"status": "ok"}
