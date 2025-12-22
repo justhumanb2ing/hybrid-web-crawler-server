@@ -1,5 +1,6 @@
 from bs4 import BeautifulSoup
 from typing import Dict, Optional
+from icon_parser import parse_icon
 
 
 def parse_og(html: str, request_url: str) -> Dict[str, Optional[str]]:
@@ -15,4 +16,5 @@ def parse_og(html: str, request_url: str) -> Dict[str, Optional[str]]:
         "image": og("og:image"),
         "site_name": og("og:site_name"),
         "url": og("og:url") or request_url,
+        "icon": parse_icon(html, request_url),
     }
