@@ -1,5 +1,9 @@
 {
   "version": 2,
+  "functions": {
+    "api/index.py": { "runtime": "python3.12" }
+  },
+  "routes": [{ "src": "/(.*)", "dest": "api/index.py" }],
   "buildCommand": "pip install -r requirements.txt && PLAYWRIGHT_BROWSERS_PATH=0 python -m playwright install chromium",
   "env": {
     "PLAYWRIGHT_BROWSERS_PATH": "0"
