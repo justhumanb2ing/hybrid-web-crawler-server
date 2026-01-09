@@ -1,10 +1,9 @@
-from fastapi import FastAPI, HTTPException, Depends
+from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel, HttpUrl
 import os
 from dotenv import load_dotenv
 
-from app.dependencies import require_signed_in_user
 from app.services.crawler_service import crawl_with_fallback
 
 load_dotenv()
@@ -27,7 +26,7 @@ class CrawlRequest(BaseModel):
     url: HttpUrl
 
 @app.post("/crawl")
-def crawl(req: CrawlRequest, _: None = Depends(require_signed_in_user)):
+def crawl(req: CrawlRequest):
     try:
         data = crawl_with_fallback(str(req.url))
         return {

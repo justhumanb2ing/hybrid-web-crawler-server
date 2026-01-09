@@ -1,7 +1,6 @@
 from playwright.sync_api import sync_playwright
 
 from app.parsing.og import parse_og
-from app.crawlers.proxy import get_playwright_proxy
 
 
 class DynamicCrawlError(Exception):
@@ -11,12 +10,7 @@ class DynamicCrawlError(Exception):
 def dynamic_crawl(url: str):
     try:
         with sync_playwright() as p:
-            launch_kwargs = {"headless": True}
-            proxy = get_playwright_proxy()
-            if proxy:
-                launch_kwargs["proxy"] = proxy
-
-            browser = p.chromium.launch(**launch_kwargs)
+            browser = p.chromium.launch(headless=True)
             page = browser.new_page()
 
             page.goto(url, wait_until="domcontentloaded", timeout=15000)
