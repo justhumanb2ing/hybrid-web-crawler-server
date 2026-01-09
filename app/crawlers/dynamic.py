@@ -1,3 +1,5 @@
+import os
+
 from playwright.sync_api import sync_playwright
 
 from app.parsing.og import parse_og
@@ -9,6 +11,7 @@ class DynamicCrawlError(Exception):
 
 def dynamic_crawl(url: str):
     try:
+        os.environ.setdefault("PLAYWRIGHT_BROWSERS_PATH", "0")
         with sync_playwright() as p:
             browser = p.chromium.launch(headless=True)
             page = browser.new_page()
